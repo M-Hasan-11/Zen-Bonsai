@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { Product } from '../types';
 
 export interface CartItem extends Product {
@@ -69,8 +69,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const clearCart = () => setCart([]);
 
-    const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-    const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
+    const cartTotal = useMemo(() => cart.reduce((total, item) => total + (item.price * item.quantity), 0), [cart]);
+    const cartCount = useMemo(() => cart.reduce((count, item) => count + item.quantity, 0), [cart]);
 
     return (
         <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, cartCount }}>
