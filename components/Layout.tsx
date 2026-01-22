@@ -1,12 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
-  
+  const { user } = useAuth();
+  const { cartCount } = useCart();
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -59,18 +63,18 @@ export const Navbar = () => {
                 placeholder="Search..."
                 className="bg-surface-dark border border-[#3f4241] rounded-full pl-4 pr-10 py-2 text-sm text-white focus:outline-none focus:border-primary w-40 md:w-60 transition-all font-body placeholder:text-text-muted"
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onMouseDown={(e) => e.preventDefault()} // Prevent blur before click
-                onClick={() => setIsSearchOpen(false)} 
+                onClick={() => setIsSearchOpen(false)}
                 className="absolute right-2 flex items-center justify-center text-text-muted hover:text-white size-8 rounded-full"
               >
                 <span className="material-symbols-outlined text-[18px]">close</span>
               </button>
             </form>
           ) : (
-            <button 
-              onClick={() => setIsSearchOpen(true)} 
+            <button
+              onClick={() => setIsSearchOpen(true)}
               className="flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white"
             >
               <span className="material-symbols-outlined text-[20px]">search</span>
@@ -79,20 +83,22 @@ export const Navbar = () => {
 
           <Link to="/cart" className="relative flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
             <span className="material-symbols-outlined text-[20px]">shopping_bag</span>
-            <span className="absolute top-2 right-2 size-2 bg-primary rounded-full"></span>
+            {cartCount > 0 && (
+              <span className="absolute top-2 right-2 size-2 bg-primary rounded-full"></span>
+            )}
           </Link>
-          <Link to="/dashboard" title="Dashboard" className="hidden sm:flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
-             <span className="material-symbols-outlined text-[20px]">person</span>
+          <Link to={user ? "/dashboard" : "/auth"} title={user ? "Dashboard" : "Sign In"} className="hidden sm:flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
+            <span className="material-symbols-outlined text-[20px]">{user ? 'person' : 'login'}</span>
           </Link>
           <Link to="/contact" title="Contact Us" className="hidden sm:flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
-             <span className="material-symbols-outlined text-[20px]">support_agent</span>
+            <span className="material-symbols-outlined text-[20px]">support_agent</span>
           </Link>
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
             <span className="material-symbols-outlined text-[20px]">menu</span>
           </button>
         </div>
       </div>
-      
+
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-background-dark border-t border-[#2f3231] px-4 py-4 flex flex-col gap-4 absolute w-full left-0 top-20 shadow-xl z-50">
@@ -100,7 +106,7 @@ export const Navbar = () => {
           <Link onClick={() => setIsMenuOpen(false)} to="/care" className="text-text-main hover:text-primary transition-colors text-base font-medium py-2">Care</Link>
           <Link onClick={() => setIsMenuOpen(false)} to="/about" className="text-text-main hover:text-primary transition-colors text-base font-medium py-2">About</Link>
           <Link onClick={() => setIsMenuOpen(false)} to="/workshops" className="text-text-main hover:text-primary transition-colors text-base font-medium py-2">Workshops</Link>
-          <Link onClick={() => setIsMenuOpen(false)} to="/dashboard" className="text-text-main hover:text-primary transition-colors text-base font-medium py-2">Dashboard</Link>
+          <Link onClick={() => setIsMenuOpen(false)} to={user ? "/dashboard" : "/auth"} className="text-text-main hover:text-primary transition-colors text-base font-medium py-2">{user ? 'Dashboard' : 'Sign In'}</Link>
           <Link onClick={() => setIsMenuOpen(false)} to="/contact" className="text-text-main hover:text-primary transition-colors text-base font-medium py-2">Contact</Link>
         </div>
       )}
