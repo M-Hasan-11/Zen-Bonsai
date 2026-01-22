@@ -1,18 +1,18 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { PRODUCTS } from '../data';
 import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 
 export const ShopPage = () => {
   const { addToCart } = useCart();
-  const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleQuickAdd = (e: React.MouseEvent, product: any) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product, 1);
-    // Optional: Show toast
-    navigate('/cart');
+    showToast(`${product.name} added to cart`);
   };
 
   return (
