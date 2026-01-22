@@ -61,12 +61,14 @@ export const Navbar = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onBlur={() => !searchQuery && setIsSearchOpen(false)}
                 placeholder="Search..."
+                aria-label="Search site"
                 className="bg-surface-dark border border-[#3f4241] rounded-full pl-4 pr-10 py-2 text-sm text-white focus:outline-none focus:border-primary w-40 md:w-60 transition-all font-body placeholder:text-text-muted"
               />
               <button
                 type="button"
                 onMouseDown={(e) => e.preventDefault()} // Prevent blur before click
                 onClick={() => setIsSearchOpen(false)}
+                aria-label="Close search"
                 className="absolute right-2 flex items-center justify-center text-text-muted hover:text-white size-8 rounded-full"
               >
                 <span className="material-symbols-outlined text-[18px]">close</span>
@@ -75,25 +77,26 @@ export const Navbar = () => {
           ) : (
             <button
               onClick={() => setIsSearchOpen(true)}
+              aria-label="Open search"
               className="flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white"
             >
               <span className="material-symbols-outlined text-[20px]">search</span>
             </button>
           )}
 
-          <Link to="/cart" className="relative flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
+          <Link to="/cart" aria-label={`Cart (${cartCount} items)`} className="relative flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
             <span className="material-symbols-outlined text-[20px]">shopping_bag</span>
             {cartCount > 0 && (
               <span className="absolute top-2 right-2 size-2 bg-primary rounded-full"></span>
             )}
           </Link>
-          <Link to={user ? "/dashboard" : "/auth"} title={user ? "Dashboard" : "Sign In"} className="hidden sm:flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
+          <Link to={user ? "/dashboard" : "/auth"} title={user ? "Dashboard" : "Sign In"} aria-label={user ? "Dashboard" : "Sign In"} className="hidden sm:flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
             <span className="material-symbols-outlined text-[20px]">{user ? 'person' : 'login'}</span>
           </Link>
-          <Link to="/contact" title="Contact Us" className="hidden sm:flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
+          <Link to="/contact" title="Contact Us" aria-label="Contact Us" className="hidden sm:flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
             <span className="material-symbols-outlined text-[20px]">support_agent</span>
           </Link>
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu" aria-expanded={isMenuOpen} className="md:hidden flex items-center justify-center size-10 rounded-full hover:bg-surface-dark transition-colors text-white">
             <span className="material-symbols-outlined text-[20px]">menu</span>
           </button>
         </div>
@@ -174,8 +177,11 @@ export const Footer = () => (
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-background-light focus:text-primary focus:font-bold focus:shadow-xl focus:rounded-br-lg transition-all outline-none">
+        Skip to content
+      </a>
       <Navbar />
-      <main className="flex-grow w-full flex flex-col">
+      <main id="main-content" className="flex-grow w-full flex flex-col">
         {children}
       </main>
       <Footer />
