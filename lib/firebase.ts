@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCY4ctohkJ7y334SxLWoz2mnZZQ5gZUTTA",
-  authDomain: "zen-bonsai-online.firebaseapp.com",
-  projectId: "zen-bonsai-online",
-  storageBucket: "zen-bonsai-online.firebasestorage.app",
-  messagingSenderId: "343390924774",
-  appId: "1:343390924774:web:e0eec81d9729f06b47f027",
-  measurementId: "G-YKYXYH5GBV"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);
