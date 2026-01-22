@@ -2,6 +2,7 @@ import React, { useEffect, Suspense } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { ToastProvider } from './context/ToastContext';
 import { Layout } from './components/Layout';
 
 // Lazy load page components
@@ -42,6 +43,21 @@ const App = () => {
       <ScrollToTop />
       <AuthProvider>
         <CartProvider>
+          <ToastProvider>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/product/:id" element={<ProductPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/care" element={<CarePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/workshops" element={<WorkshopsPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/auth" element={<AuthPage />} />
+            </Routes>
           <Layout>
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
@@ -59,6 +75,7 @@ const App = () => {
               </Routes>
             </Suspense>
           </Layout>
+        </ToastProvider>
         </CartProvider>
       </AuthProvider>
     </HashRouter>
