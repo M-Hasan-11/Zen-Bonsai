@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { ToastProvider } from './context/ToastContext';
 import { Layout } from './components/Layout';
 import { HomePage, AboutPage, CarePage } from './pages/Home';
 import { ShopPage } from './pages/Shop';
@@ -26,9 +27,10 @@ const App = () => {
       <ScrollToTop />
       <AuthProvider>
         <CartProvider>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
+          <ToastProvider>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
               <Route path="/shop" element={<ShopPage />} />
               <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/cart" element={<CartPage />} />
@@ -41,6 +43,7 @@ const App = () => {
               <Route path="/auth" element={<AuthPage />} />
             </Routes>
           </Layout>
+        </ToastProvider>
         </CartProvider>
       </AuthProvider>
     </HashRouter>
