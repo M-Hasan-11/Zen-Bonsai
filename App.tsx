@@ -44,38 +44,25 @@ const App = () => {
       <AuthProvider>
         <CartProvider>
           <ToastProvider>
+
             <Layout>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-              <Route path="/shop" element={<ShopPage />} />
-              <Route path="/product/:id" element={<ProductPage />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/care" element={<CarePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/workshops" element={<WorkshopsPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route path="/auth" element={<AuthPage />} />
-            </Routes>
-          <Layout>
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/shop" element={<ShopPage />} />
-                <Route path="/product/:id" element={<ProductPage />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/care" element={<CarePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/workshops" element={<WorkshopsPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-                <Route path="/dashboard" element={<DashboardPage />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/auth" element={<AuthPage />} />
-              </Routes>
-            </Suspense>
-          </Layout>
-        </ToastProvider>
+              <Suspense fallback={<LoadingFallback />}>
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/shop" element={<ShopPage />} />
+                  <Route path="/product/:id" element={<ProductPage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/care" element={<CarePage />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/workshops" element={<WorkshopsPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/search" element={<SearchPage />} />
+                  <Route path="/auth" element={<AuthPage />} />
+                </Routes>
+              </Suspense>
+            </Layout>
+          </ToastProvider>
         </CartProvider>
       </AuthProvider>
     </HashRouter>
