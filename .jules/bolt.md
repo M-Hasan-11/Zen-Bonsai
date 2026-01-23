@@ -5,3 +5,7 @@
 ## 2025-02-14 - Identifying Heavy Chunks
 **Learning:** `recharts` (300kB+) was bundled in the main entry because it was imported in `DashboardPage`, which was statically imported in `App.tsx`.
 **Action:** always check `package.json` for heavy libs (charts, maps, editors) and `grep` their usage to see if they are in the critical path.
+
+## 2026-01-23 - Context Value Instability
+**Learning:** Context Providers (`CartContext`, `AuthContext`, `ToastContext`) were passing new object references on every render, causing unnecessary re-renders of all consumers even when state didn't change.
+**Action:** Always memoize Context values with `useMemo` and wrap functions with `useCallback`.
