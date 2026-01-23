@@ -127,7 +127,11 @@ export const ShopPage = () => {
                       </div>
                     )}
 
-                    <button onClick={(e) => handleQuickAdd(e, product)} className="absolute bottom-4 right-4 size-10 bg-primary text-white rounded-full flex items-center justify-center translate-y-14 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white hover:text-primary z-10">
+                    <button
+                      onClick={(e) => handleQuickAdd(e, product)}
+                      aria-label={`Add ${product.name} to cart`}
+                      className="absolute bottom-4 right-4 size-10 bg-primary text-white rounded-full flex items-center justify-center translate-y-14 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 focus:translate-y-0 focus:opacity-100 transition-all duration-300 shadow-lg hover:bg-white hover:text-primary z-10"
+                    >
                       <span className="material-symbols-outlined text-[20px]">add_shopping_cart</span>
                     </button>
                   </div>
@@ -143,14 +147,14 @@ export const ShopPage = () => {
 
             {/* Pagination */}
             <div className="flex items-center justify-center gap-2 mt-16">
-              <button className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">
+              <button aria-label="Previous page" className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">
                 <span className="material-symbols-outlined text-sm">chevron_left</span>
               </button>
-              <button className="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
-              <button className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">2</button>
-              <button className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">3</button>
+              <button aria-label="Page 1" className="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+              <button aria-label="Page 2" className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">2</button>
+              <button aria-label="Page 3" className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">3</button>
               <span className="text-text-muted px-2">...</span>
-              <button className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">
+              <button aria-label="Next page" className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">
                 <span className="material-symbols-outlined text-sm">chevron_right</span>
               </button>
             </div>
