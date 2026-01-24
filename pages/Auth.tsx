@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { auth, db } from '../lib/firebase';
 import { useNavigate } from 'react-router-dom';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { isValidEmail, isValidPassword, isValidName } from '../lib/validation';
 
 export const AuthPage = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -18,6 +19,22 @@ export const AuthPage = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+
+        if (!isValidEmail(email)) {
+            setError('Please enter a valid email address');
+            return;
+        }
+
+        if (!isValidPassword(password)) {
+            setError('Password must be at least 6 characters');
+            return;
+        }
+
+        if (!isLogin && !isValidName(name)) {
+            setError('Name must be between 2 and 50 characters');
+            return;
+        }
+
         setLoading(true);
 
         try {
