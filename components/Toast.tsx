@@ -18,8 +18,10 @@ export const Toast: React.FC<ToastProps> = ({ message, show, onClose }) => {
 
   return (
     <div
+      role="status"
+      aria-live="polite"
       className={`fixed bottom-5 right-5 bg-gray-800 text-white px-4 py-2 rounded-md shadow-lg transition-opacity duration-300 ${
-        show ? 'opacity-100' : 'opacity-0'
+        show ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
       {message}
