@@ -13,7 +13,7 @@ const CarePage = React.lazy(() => import('./pages/Home').then(module => ({ defau
 const ShopPage = React.lazy(() => import('./pages/Shop').then(module => ({ default: module.ShopPage })));
 
 const ProductPage = React.lazy(() => import('./pages/Product').then(module => ({ default: module.ProductPage })));
-const CartPage = React.lazy(() => import('./pages/Product').then(module => ({ default: module.CartPage })));
+const CartPage = React.lazy(() => import('./pages/Cart').then(module => ({ default: module.CartPage })));
 
 const DashboardPage = React.lazy(() => import('./pages/Dashboard').then(module => ({ default: module.DashboardPage })));
 
