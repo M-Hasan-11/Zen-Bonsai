@@ -5,3 +5,7 @@
 ## 2025-02-14 - Identifying Heavy Chunks
 **Learning:** `recharts` (300kB+) was bundled in the main entry because it was imported in `DashboardPage`, which was statically imported in `App.tsx`.
 **Action:** always check `package.json` for heavy libs (charts, maps, editors) and `grep` their usage to see if they are in the critical path.
+
+## 2025-02-15 - Splitting Grouped Page Files
+**Learning:** React page components (Home, About, Care) were grouped in single files (`pages/Home.tsx`), preventing effective code splitting. Visiting one route downloaded code for all three.
+**Action:** Always ensure page components intended for lazy loading reside in their own dedicated files to maximize the benefit of `React.lazy` and Vite's chunk splitting.

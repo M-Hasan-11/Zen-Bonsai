@@ -6,19 +6,19 @@ import { ToastProvider } from './context/ToastContext';
 import { Layout } from './components/Layout';
 
 // Lazy load page components
-const HomePage = React.lazy(() => import('./pages/Home').then(module => ({ default: module.HomePage })));
-const AboutPage = React.lazy(() => import('./pages/Home').then(module => ({ default: module.AboutPage })));
-const CarePage = React.lazy(() => import('./pages/Home').then(module => ({ default: module.CarePage })));
+const HomePage = React.lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })));
+const AboutPage = React.lazy(() => import('./pages/AboutPage').then(module => ({ default: module.AboutPage })));
+const CarePage = React.lazy(() => import('./pages/CarePage').then(module => ({ default: module.CarePage })));
 
 const ShopPage = React.lazy(() => import('./pages/Shop').then(module => ({ default: module.ShopPage })));
 
-const ProductPage = React.lazy(() => import('./pages/Product').then(module => ({ default: module.ProductPage })));
-const CartPage = React.lazy(() => import('./pages/Product').then(module => ({ default: module.CartPage })));
+const ProductPage = React.lazy(() => import('./pages/ProductPage').then(module => ({ default: module.ProductPage })));
+const CartPage = React.lazy(() => import('./pages/CartPage').then(module => ({ default: module.CartPage })));
 
 const DashboardPage = React.lazy(() => import('./pages/Dashboard').then(module => ({ default: module.DashboardPage })));
 
-const WorkshopsPage = React.lazy(() => import('./pages/ContentPages').then(module => ({ default: module.WorkshopsPage })));
-const ContactPage = React.lazy(() => import('./pages/ContentPages').then(module => ({ default: module.ContactPage })));
+const WorkshopsPage = React.lazy(() => import('./pages/WorkshopsPage').then(module => ({ default: module.WorkshopsPage })));
+const ContactPage = React.lazy(() => import('./pages/ContactPage').then(module => ({ default: module.ContactPage })));
 
 const SearchPage = React.lazy(() => import('./pages/Search').then(module => ({ default: module.SearchPage })));
 const AuthPage = React.lazy(() => import('./pages/Auth').then(module => ({ default: module.AuthPage })));
