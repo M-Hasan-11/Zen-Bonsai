@@ -40,7 +40,7 @@ export const ProductPage = () => {
             </div>
             <div className="grid grid-cols-4 gap-4">
               {[...Array(4)].map((_, i) => (
-                <button key={i} className={`relative aspect-square rounded-lg overflow-hidden border-2 ${i === 0 ? 'border-primary' : 'border-transparent hover:border-white/50 opacity-70 hover:opacity-100'} transition-all`}>
+                <button aria-label={`View product image ${i + 1}`} key={i} className={`relative aspect-square rounded-lg overflow-hidden border-2 ${i === 0 ? 'border-primary' : 'border-transparent hover:border-white/50 opacity-70 hover:opacity-100'} transition-all`}>
                   <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url("${product.image}")` }}></div>
                 </button>
               ))}
@@ -96,9 +96,9 @@ export const ProductPage = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <div className="flex items-center h-14 bg-surface-dark rounded-lg border border-white/10 w-full sm:w-auto">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-4 text-text-muted hover:text-white transition-colors h-full">-</button>
+                <button aria-label="Decrease quantity" onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-4 text-text-muted hover:text-white transition-colors h-full">-</button>
                 <input className="w-12 bg-transparent text-center text-white border-none focus:ring-0 font-bold p-0" readOnly type="text" value={quantity} />
-                <button onClick={() => setQuantity(quantity + 1)} className="px-4 text-text-muted hover:text-white transition-colors h-full">+</button>
+                <button aria-label="Increase quantity" onClick={() => setQuantity(quantity + 1)} className="px-4 text-text-muted hover:text-white transition-colors h-full">+</button>
               </div>
               <button onClick={handleAddToCart} className="flex-1 h-14 bg-primary hover:bg-primary-hover text-white font-bold text-lg rounded-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined">shopping_cart</span>
@@ -201,11 +201,11 @@ export const CartPage = () => {
                         <p className="text-primary font-bold mt-2">${item.price.toFixed(2)}</p>
                       </div>
                       <div className="flex flex-col items-end gap-2">
-                        <button onClick={() => removeFromCart(item.id)} className="text-text-muted hover:text-red-400"><span className="material-symbols-outlined">delete</span></button>
+                        <button aria-label="Remove item" onClick={() => removeFromCart(item.id)} className="text-text-muted hover:text-red-400"><span className="material-symbols-outlined">delete</span></button>
                         <div className="flex items-center h-8 bg-background-dark rounded border border-white/10">
-                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="px-2 text-text-muted hover:text-white">-</button>
+                          <button aria-label="Decrease quantity" onClick={() => updateQuantity(item.id, item.quantity - 1)} className="px-2 text-text-muted hover:text-white">-</button>
                           <span className="w-8 text-center text-white text-sm">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="px-2 text-text-muted hover:text-white">+</button>
+                          <button aria-label="Increase quantity" onClick={() => updateQuantity(item.id, item.quantity + 1)} className="px-2 text-text-muted hover:text-white">+</button>
                         </div>
                       </div>
                     </div>
