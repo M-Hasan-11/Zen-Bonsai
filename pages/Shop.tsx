@@ -106,51 +106,55 @@ export const ShopPage = () => {
           <div className="flex-1">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {PRODUCTS.map((product) => (
-                <Link to={`/product/${product.id}`} key={product.id} className="flex flex-col group cursor-pointer">
+                <div key={product.id} className="flex flex-col group relative">
                   <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-surface-dark mb-4">
-                    <div className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: `url("${product.image}")` }}></div>
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                    <Link to={`/product/${product.id}`} className="absolute inset-0 z-0 block" tabIndex={-1} aria-hidden="true">
+                      <div className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: `url("${product.image}")` }}></div>
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
+                    </Link>
 
                     {product.age && (
-                      <div className="absolute top-3 right-3 bg-surface-dark/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white border border-white/10">
+                      <div className="absolute top-3 right-3 bg-surface-dark/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white border border-white/10 pointer-events-none z-10">
                         {product.age} Years
                       </div>
                     )}
                     {product.isBestSeller && (
-                      <div className="absolute top-3 left-3 bg-primary px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg">
+                      <div className="absolute top-3 left-3 bg-primary px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg pointer-events-none z-10">
                         Best Seller
                       </div>
                     )}
                     {product.isSale && (
-                      <div className="absolute top-3 left-3 bg-red-800/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg">
+                      <div className="absolute top-3 left-3 bg-red-800/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg pointer-events-none z-10">
                         Sale
                       </div>
                     )}
 
-                    <button onClick={(e) => handleQuickAdd(e, product)} className="absolute bottom-4 right-4 size-10 bg-primary text-white rounded-full flex items-center justify-center translate-y-14 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white hover:text-primary z-10">
+                    <button aria-label={`Quick add ${product.name} to cart`} onClick={(e) => handleQuickAdd(e, product)} className="absolute bottom-4 right-4 size-10 bg-primary text-white rounded-full flex items-center justify-center translate-y-14 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white hover:text-primary z-20 cursor-pointer">
                       <span className="material-symbols-outlined text-[20px]">add_shopping_cart</span>
                     </button>
                   </div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">{product.name}</h3>
-                  <p className="text-text-muted text-sm font-body mb-2 italic">{product.latinName}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-primary font-bold text-lg">${product.price.toFixed(2)}</p>
-                    {product.originalPrice && <p className="text-text-muted text-sm line-through decoration-white/30">${product.originalPrice.toFixed(2)}</p>}
-                  </div>
-                </Link>
+                  <Link to={`/product/${product.id}`} className="flex flex-col">
+                    <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">{product.name}</h3>
+                    <p className="text-text-muted text-sm font-body mb-2 italic">{product.latinName}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-primary font-bold text-lg">${product.price.toFixed(2)}</p>
+                      {product.originalPrice && <p className="text-text-muted text-sm line-through decoration-white/30">${product.originalPrice.toFixed(2)}</p>}
+                    </div>
+                  </Link>
+                </div>
               ))}
             </div>
 
             {/* Pagination */}
             <div className="flex items-center justify-center gap-2 mt-16">
-              <button className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">
+              <button aria-label="Previous page" className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">
                 <span className="material-symbols-outlined text-sm">chevron_left</span>
               </button>
-              <button className="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
-              <button className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">2</button>
-              <button className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">3</button>
+              <button aria-label="Page 1" className="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+              <button aria-label="Page 2" className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">2</button>
+              <button aria-label="Page 3" className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">3</button>
               <span className="text-text-muted px-2">...</span>
-              <button className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">
+              <button aria-label="Next page" className="size-10 flex items-center justify-center rounded-lg border border-[#3f4241] text-text-muted hover:border-primary hover:text-white transition-colors">
                 <span className="material-symbols-outlined text-sm">chevron_right</span>
               </button>
             </div>
