@@ -2,3 +2,8 @@
 **Vulnerability:** Users could potentially escalate privileges by modifying the client-side code to write `role: 'admin'` to their user document, as the Firestore rule only checked for ownership (`uid == userId`), not the content of the write.
 **Learning:** In a "serverless" or client-direct-to-database architecture like Firebase, trusting the client with `write` permission is dangerous if sensitive fields exist in the same document as user-editable fields.
 **Prevention:** Split `write` permissions into `create` and `update` in `firestore.rules`. Explicitly validate sensitive fields (like `role`) on `create` and prevent their modification on `update` by comparing `request.resource.data.role` with `resource.data.role`.
+
+## 2026-02-14 - Firestore Order Schema Validation
+**Vulnerability:** Users could create orders with invalid statuses (e.g., 'Delivered') or negative totals, bypassing client-side checks.
+**Learning:** Client-side validation is insufficient. Firestore Security Rules can acts as a database-level schema validator to enforce business logic integrity (state machine start state, type checking) even without a backend.
+**Prevention:** Enforce strict field types and values (e.g., `status == 'Processing'`, `total >= 0`) in `allow create` rules.
