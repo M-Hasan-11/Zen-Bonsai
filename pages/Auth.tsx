@@ -15,28 +15,72 @@ export const AuthPage = () => {
     const { signInWithGoogle } = useAuth();
     const navigate = useNavigate();
 
+    const validateForm = () => {
+        const cleanEmail = email.trim();
+        const cleanName = name.trim();
+
+        if (!cleanEmail.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            setError('Invalid email address');
+            return null;
+        }
+
+        if (cleanEmail.length > 100) {
+            setError('Email too long (max 100 characters)');
+            return null;
+        }
+
+        if (password.length < 8) {
+            setError('Password must be at least 8 characters');
+            return null;
+        }
+
+        if (!isLogin) {
+            if (cleanName.length < 2) {
+                setError('Name must be at least 2 characters');
+                return null;
+            }
+            if (cleanName.length > 50) {
+                setError('Name must be less than 50 characters');
+                return null;
+            }
+            // Sentinel: Enforce password complexity for new accounts
+            if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/.test(password)) {
+                setError('Password must contain at least one number, one uppercase and one lowercase letter');
+                return null;
+            }
+        }
+
+        return { cleanEmail, cleanName, cleanPassword: password };
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+
+        const validatedData = validateForm();
+        if (!validatedData) return;
+
+        const { cleanEmail, cleanName, cleanPassword } = validatedData;
+
         setLoading(true);
 
         try {
             if (isLogin) {
-                await signInWithEmailAndPassword(auth, email, password);
+                await signInWithEmailAndPassword(auth, cleanEmail, cleanPassword);
                 navigate('/dashboard');
             } else {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const userCredential = await createUserWithEmailAndPassword(auth, cleanEmail, cleanPassword);
                 const user = userCredential.user;
 
                 await updateProfile(user, {
-                    displayName: name
+                    displayName: cleanName
                 });
 
                 // Create user document in Firestore
                 await setDoc(doc(db, "users", user.uid), {
                     uid: user.uid,
-                    name: name,
-                    email: email,
+                    name: cleanName,
+                    email: cleanEmail,
                     role: 'customer',
                     createdAt: new Date().toISOString()
                 });
