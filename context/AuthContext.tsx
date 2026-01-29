@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useContext } from 'react';
+import React, { createContext, useEffect, useState, useContext, useCallback, useMemo } from 'react';
 import { onAuthStateChanged, User, signOut as firebaseSignOut, GoogleAuthProvider, signInWithPopup, UserCredential } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 
@@ -30,21 +30,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return () => unsubscribe();
     }, []);
 
-    const signOut = async () => {
+    const signOut = useCallback(async () => {
         try {
             await firebaseSignOut(auth);
         } catch (error) {
             console.error("Error signing out: ", error);
         }
-    }
+    }, []);
 
-    const signInWithGoogle = async () => {
+    const signInWithGoogle = useCallback(async () => {
         const provider = new GoogleAuthProvider();
         return await signInWithPopup(auth, provider);
-    }
+    }, []);
+
+    const value = useMemo(() => ({ user, loading, signOut, signInWithGoogle }), [user, loading, signOut, signInWithGoogle]);
 
     return (
-        <AuthContext.Provider value={{ user, loading, signOut, signInWithGoogle }}>
+        <AuthContext.Provider value={value}>
             {!loading && children}
         </AuthContext.Provider>
     );

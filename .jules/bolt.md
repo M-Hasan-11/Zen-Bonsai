@@ -5,3 +5,7 @@
 ## 2025-02-14 - Identifying Heavy Chunks
 **Learning:** `recharts` (300kB+) was bundled in the main entry because it was imported in `DashboardPage`, which was statically imported in `App.tsx`.
 **Action:** always check `package.json` for heavy libs (charts, maps, editors) and `grep` their usage to see if they are in the critical path.
+
+## 2025-02-14 - Context Re-render Cascades
+**Learning:** Context Providers that manage transient UI state (like `ToastProvider` showing/hiding a toast) MUST memoize their `value` object. Without it, every state change (e.g. toast appearing) triggers a re-render for ALL consumers, even if they only use the static `showToast` function.
+**Action:** Always wrap Context value in `useMemo` and functions in `useCallback`, especially for global UI services.
