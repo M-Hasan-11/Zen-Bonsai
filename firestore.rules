@@ -18,9 +18,16 @@ service cloud.firestore {
     // Orders: Authenticated users can create orders. 
     // Users can read their own orders.
     // Sentinel: Enhanced to ensure users can only create orders for themselves
+    // Sentinel: Enhanced to enforce strict schema (total, status, items)
     match /orders/{orderId} {
       allow create: if request.auth != null
-                    && request.resource.data.userId == request.auth.uid;
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.total is number
+                    && request.resource.data.total >= 0
+                    && request.resource.data.status == 'Processing'
+                    && request.resource.data.items is list
+                    && request.resource.data.items.size() > 0
+                    && request.resource.data.createdAt is string;
       allow read: if request.auth != null && resource.data.userId == request.auth.uid;
     }
     
