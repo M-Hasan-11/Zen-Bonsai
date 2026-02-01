@@ -101,6 +101,7 @@ export const AuthPage = () => {
                             <input
                                 type="text"
                                 required
+                                maxLength={50}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 className="w-full bg-background-dark border border-[#3f4241] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
@@ -113,6 +114,7 @@ export const AuthPage = () => {
                         <input
                             type="email"
                             required
+                            maxLength={100}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full bg-background-dark border border-[#3f4241] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors"
