@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { PRODUCTS } from '../data';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
+import { ProductCard } from '../components/ProductCard';
 
 export const ShopPage = () => {
   const { addToCart } = useCart();
   const { showToast } = useToast();
 
-  const handleQuickAdd = (e: React.MouseEvent, product: any) => {
+  const handleQuickAdd = useCallback((e: React.MouseEvent, product: any) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product, 1);
     showToast(`${product.name} added to cart`);
-  };
+  }, [addToCart, showToast]);
 
   return (
     <div className="flex flex-col w-full min-h-screen">
@@ -106,38 +107,11 @@ export const ShopPage = () => {
           <div className="flex-1">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {PRODUCTS.map((product) => (
-                <Link to={`/product/${product.id}`} key={product.id} className="flex flex-col group cursor-pointer">
-                  <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-surface-dark mb-4">
-                    <div className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: `url("${product.image}")` }}></div>
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors"></div>
-
-                    {product.age && (
-                      <div className="absolute top-3 right-3 bg-surface-dark/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white border border-white/10">
-                        {product.age} Years
-                      </div>
-                    )}
-                    {product.isBestSeller && (
-                      <div className="absolute top-3 left-3 bg-primary px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg">
-                        Best Seller
-                      </div>
-                    )}
-                    {product.isSale && (
-                      <div className="absolute top-3 left-3 bg-red-800/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg">
-                        Sale
-                      </div>
-                    )}
-
-                    <button onClick={(e) => handleQuickAdd(e, product)} className="absolute bottom-4 right-4 size-10 bg-primary text-white rounded-full flex items-center justify-center translate-y-14 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white hover:text-primary z-10">
-                      <span className="material-symbols-outlined text-[20px]">add_shopping_cart</span>
-                    </button>
-                  </div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-primary transition-colors">{product.name}</h3>
-                  <p className="text-text-muted text-sm font-body mb-2 italic">{product.latinName}</p>
-                  <div className="flex items-center gap-2">
-                    <p className="text-primary font-bold text-lg">${product.price.toFixed(2)}</p>
-                    {product.originalPrice && <p className="text-text-muted text-sm line-through decoration-white/30">${product.originalPrice.toFixed(2)}</p>}
-                  </div>
-                </Link>
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onQuickAdd={handleQuickAdd}
+                />
               ))}
             </div>
 
