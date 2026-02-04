@@ -1,8 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { HERO_IMAGE, CATEGORIES, PRODUCTS, ARTICLES } from '../data';
+import { useCart } from '../context/CartContext';
+import { useToast } from '../context/ToastContext';
 
 export const HomePage = () => {
+  const { addToCart } = useCart();
+  const { showToast } = useToast();
+
+  const handleQuickAdd = (e: React.MouseEvent, product: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product, 1);
+    showToast(`${product.name} added to cart`);
+  };
+
   return (
     <div className="flex flex-col w-full">
       {/* Hero Section */}
@@ -80,7 +92,11 @@ export const HomePage = () => {
                   <div className="absolute top-3 right-3 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white">
                     {product.age} Years
                   </div>
-                  <button className="absolute bottom-4 right-4 size-10 bg-primary text-white rounded-full flex items-center justify-center translate-y-14 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow-lg">
+                  <button
+                    onClick={(e) => handleQuickAdd(e, product)}
+                    aria-label={`Quick add ${product.name} to cart`}
+                    className="absolute bottom-4 right-4 size-10 bg-primary text-white rounded-full flex items-center justify-center translate-y-14 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 focus:opacity-100 focus:translate-y-0 focus:z-20 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300 shadow-lg"
+                  >
                     <span className="material-symbols-outlined text-[20px]">add</span>
                   </button>
                 </div>
