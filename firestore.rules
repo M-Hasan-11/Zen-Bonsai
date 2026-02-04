@@ -20,7 +20,14 @@ service cloud.firestore {
     // Sentinel: Enhanced to ensure users can only create orders for themselves
     match /orders/{orderId} {
       allow create: if request.auth != null
-                    && request.resource.data.userId == request.auth.uid;
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.total is number
+                    && request.resource.data.total >= 0
+                    && request.resource.data.status == 'Processing'
+                    && request.resource.data.items is list
+                    && request.resource.data.createdAt is string
+                    && request.resource.data.size() == 5
+                    && request.resource.data.keys().hasAll(['userId', 'items', 'total', 'status', 'createdAt']);
       allow read: if request.auth != null && resource.data.userId == request.auth.uid;
     }
     
