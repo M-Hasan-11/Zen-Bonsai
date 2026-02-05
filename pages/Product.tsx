@@ -96,9 +96,27 @@ export const ProductPage = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <div className="flex items-center h-14 bg-surface-dark rounded-lg border border-white/10 w-full sm:w-auto">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-4 text-text-muted hover:text-white transition-colors h-full">-</button>
-                <input className="w-12 bg-transparent text-center text-white border-none focus:ring-0 font-bold p-0" readOnly type="text" value={quantity} />
-                <button onClick={() => setQuantity(quantity + 1)} className="px-4 text-text-muted hover:text-white transition-colors h-full">+</button>
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="px-4 text-text-muted hover:text-white transition-colors h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-l-lg"
+                  aria-label="Decrease quantity"
+                >
+                  -
+                </button>
+                <input
+                  className="w-12 bg-transparent text-center text-white border-none focus:ring-0 font-bold p-0"
+                  readOnly
+                  type="text"
+                  value={quantity}
+                  aria-label="Quantity"
+                />
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="px-4 text-text-muted hover:text-white transition-colors h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-r-lg"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
               </div>
               <button onClick={handleAddToCart} className="flex-1 h-14 bg-primary hover:bg-primary-hover text-white font-bold text-lg rounded-lg shadow-lg shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
                 <span className="material-symbols-outlined">shopping_cart</span>
@@ -201,11 +219,31 @@ export const CartPage = () => {
                         <p className="text-primary font-bold mt-2">${item.price.toFixed(2)}</p>
                       </div>
                       <div className="flex flex-col items-end gap-2">
-                        <button onClick={() => removeFromCart(item.id)} className="text-text-muted hover:text-red-400"><span className="material-symbols-outlined">delete</span></button>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="text-text-muted hover:text-red-400 focus:text-red-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background-dark rounded"
+                          aria-label={`Remove ${item.name} from cart`}
+                        >
+                          <span className="material-symbols-outlined">delete</span>
+                        </button>
                         <div className="flex items-center h-8 bg-background-dark rounded border border-white/10">
-                          <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="px-2 text-text-muted hover:text-white">-</button>
-                          <span className="w-8 text-center text-white text-sm">{item.quantity}</span>
-                          <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="px-2 text-text-muted hover:text-white">+</button>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="px-2 text-text-muted hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-l"
+                            aria-label={`Decrease quantity of ${item.name}`}
+                          >
+                            -
+                          </button>
+                          <span className="w-8 text-center text-white text-sm" aria-label="Quantity" role="status">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="px-2 text-text-muted hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-r"
+                            aria-label={`Increase quantity of ${item.name}`}
+                          >
+                            +
+                          </button>
                         </div>
                       </div>
                     </div>
